@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arpit Visuals — Designer. Video Editor. Animator.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,600&family=Josefin+Sans:wght@100;200;300;400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08070f;
+    --surface: #0f0e1a;
+    --surface2: #16152a;
+    --border: #1e1c35;
+    --text: #ece8ff;
+    --muted: #6b6688;
+    --accent: #9b6dff;
+    --accent2: #c4a8ff;
+    --red: #ff6b9d;
+    --purple: #7c4dff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    transition: background 0.4s ease, padding 0.4s ease;
+  }
+
+  nav.scrolled {
+    background: rgba(8,7,15,0.96);
+    padding: 16px 56px;
+  }
+
+  [data-theme="light"] nav.scrolled {
+    background: rgba(242,240,255,0.96);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 56px 88px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(155,109,255,0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(124,77,255,0.06) 0%, transparent 50%),
+      repeating-linear-gradient(0deg, transparent, transparent 80px,
+        rgba(255,255,255,0.012) 80px, rgba(255,255,255,0.012) 81px);
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-title { margin-bottom: 56px; }
+
+  .hero-title .line {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(72px, 11vw, 148px);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .hero-title .line:nth-child(1) { animation: fadeUp 0.7s ease 0.3s forwards; }
+  .hero-title .line:nth-child(2) { animation: fadeUp 0.7s ease 0.45s forwards; }
+  .hero-title .line:nth-child(3) {
+    animation: fadeUp 0.7s ease 0.6s forwards;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--accent);
+    font-style: italic;
+    font-weight: 800;
+  }
+
+  .hero-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: end;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.9s forwards;
+  }
+
+  .hero-bio { font-size: 16px; line-height: 1.85; color: var(--muted); max-width: 480px; font-weight: 300; }
+  .hero-bio strong { color: var(--text); font-weight: 500; }
+
+  .hero-cta { display: flex; flex-direction: column; align-items: flex-end; gap: 20px; }
+
+  .hero-stat {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  .hero-stat span {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 36px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateX(4px); }
+
+  /* ── Marquee ── */
+  .marquee-wrap {
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 0;
+    background: var(--surface);
+  }
+
+  .marquee-track {
+    display: flex;
+    animation: marquee 22s linear infinite;
+    white-space: nowrap;
+  }
+
+  .marquee-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 40px;
+    flex-shrink: 0;
+  }
+
+  .marquee-item .dot { color: var(--accent); margin-right: 36px; }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── Sections ── */
+  section { padding: 120px 56px; }
+
+  .section-header { margin-bottom: 72px; }
+
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(44px, 6vw, 88px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    color: var(--text);
+  }
+
+  .section-title em { color: var(--accent); font-style: normal; }
+
+  /* ── Services ── */
+  .services { background: var(--surface); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .service-card {
+    background: var(--surface2);
+    padding: 52px 44px;
+    transition: background 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .service-card:hover { background: var(--surface2); }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.12em; margin-bottom: 28px; opacity: 0.5; }
+
+  .service-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .service-desc { font-size: 14px; line-height: 1.85; color: var(--muted); font-weight: 300; }
+
+  .service-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+  }
+
+  /* ── About ── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 100px; align-items: start; }
+
+  .about-body { font-size: 16px; line-height: 1.9; color: var(--muted); margin-bottom: 20px; font-weight: 300; }
+  .about-body strong { color: var(--text); font-weight: 500; }
+
+  /* ── Skills ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .skill-card {
+    background: var(--surface);
+    padding: 40px 36px;
+    transition: background 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card:hover { background: var(--surface2); }
+
+  .skill-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px; height: 100%;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.4s ease;
+  }
+
+  .skill-card:hover::after { transform: scaleY(1); }
+
+  .skill-icon { font-size: 22px; margin-bottom: 18px; display: block; opacity: 0.6; }
+
+  .skill-card-title { font-family: 'Poppins', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 8px; line-height: 1.1; }
+
+  .skill-card-sub { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+
+  .skill-card-desc { font-size: 13px; line-height: 1.8; color: var(--muted); font-weight: 300; }
+
+  .skill-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+
+  .skill-tool { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); }
+
+  /* ── Work ── */
+  .work-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .work-card {
+    background: var(--surface);
+    padding: 48px 52px;
+    transition: background 0.25s ease;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .work-card:hover { background: var(--surface2); }
+
+  .work-card-platform {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .work-card-platform.yt { color: var(--red); }
+  .work-card-platform.ig { color: var(--purple); }
+  .work-card-platform.yt::before { content: '▶'; font-size: 8px; }
+  .work-card-platform.ig::before { content: '◉'; font-size: 9px; }
+
+  .work-card-title {
+    font-family: 'Switzer', sans-serif;
+    font-size: 26px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+
+  .work-card-desc { font-size: 14px; color: var(--muted); line-height: 1.75; max-width: 520px; font-weight: 300; }
+
+  .work-card-arrow { font-size: 48px; color: var(--accent); line-height: 1; transition: transform 0.3s ease; flex-shrink: 0; }
+
+  .work-card:hover .work-card-arrow { transform: translate(4px, -4px); }
+
+  /* ── Contact ── */
+  .contact { background: var(--surface); }
+  .contact-inner { max-width: 760px; }
+
+  .contact-sub { font-size: 16px; color: var(--muted); line-height: 1.8; margin-bottom: 56px; max-width: 480px; font-weight: 300; }
+
+  .contact-links { display: flex; flex-direction: column; border: 1px solid var(--border); }
+
+  .contact-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 26px 36px;
+    text-decoration: none;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s ease;
+  }
+
+  .contact-link:last-child { border-bottom: none; }
+  .contact-link:hover { background: var(--surface2); }
+
+  .contact-link-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+
+  .contact-link-value {
+    font-family: 'Switzer', sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+
+  .contact-link-arrow { font-size: 28px; color: var(--accent); transition: transform 0.3s ease; }
+
+  .contact-link:hover .contact-link-arrow { transform: translate(4px, -4px); }
+
+  /* ── Footer ── */
+  footer {
+    padding: 40px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.1em; color: var(--accent); }
+
+  .footer-note { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+  .divider { height: 1px; background: var(--border); margin: 0 56px; }
+
+  /* ── Animations ── */
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 200;
+    opacity: 0.022;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 20px; }
+    .nav-logo { font-size: 16px; letter-spacing: 0.08em; white-space: nowrap; }
+    nav.scrolled { padding: 12px 20px; }
+    .nav-links { display: none; }
+    .nav-right { gap: 10px; }
+    .hero { padding: 100px 24px 64px; }
+    .hero-bottom { grid-template-columns: 1fr; }
+    .hero-cta { align-items: flex-start; }
+    .hero-eyebrow { margin-top: 80px; }
+    section { padding: 80px 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .work-card { flex-direction: column; align-items: flex-start; }
+    footer { padding: 32px 24px; flex-direction: column; gap: 16px; text-align: center; }
+    .divider { margin: 0 24px; }
+  }
+
+  /* ── Nav right group ── */
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+
+  /* ── Theme toggle ── */
+  .theme-toggle {
+    width: 34px; height: 34px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.3s, color 0.3s;
+    flex-shrink: 0;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── Hire Me button ── */
+  .nav-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 11px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.3s;
+    flex-shrink: 0;
+  }
+  .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
+
+  /* ── Light theme overrides ── */
+  [data-theme="light"] {
+    --bg: #f2f0ff;
+    --surface: #e8e4ff;
+    --surface2: #dcd7ff;
+    --border: #c8c0f0;
+    --text: #1a1814;
+    --muted: #7a74a0;
+    --accent: #9b6dff;
+    --accent2: #a87fff;
+    --red: #ff6b9d;
+    --purple: #7c4dff;
+  }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Arpit Visuals</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">&#9728;</button>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfnbCjJba9tQ28tjvLPglZ25XZKPBfuHfbW8qYHqeGLtcOjEQ/viewform?pli=1" target="_blank" class="nav-cta">Hire Me</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-eyebrow">✦ Your Vision, My Craft</div>
+  <h1 class="hero-title">
+    <span class="line">Designer.</span>
+    <span class="line">Video Editor.</span>
+    <span class="line">Animator.</span>
+  </h1>
+  <div class="hero-bottom">
+    <p class="hero-bio">
+      Hey, I'm <strong>Arpit</strong> — a self-taught creative building visuals since age 14.
+      I transform ordinary footage into <strong>captivating, high-quality content</strong> that
+      engages audiences and elevates your brand.
+    </p>
+    <div class="hero-cta">
+      <div class="hero-stat">
+        Years of experience
+        <span>4+</span>
+      </div>
+      <a href="#contact" class="btn-primary">Work With Me →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="dot">✦</span> 3D Animation</span>
+    <span class="marquee-item"><span class="dot">✦</span> Video Editing</span>
+    <span class="marquee-item"><span class="dot">✦</span> Motion Graphics</span>
+    <span class="marquee-item"><span class="dot">✦</span> Visual Effects</span>
+    <span class="marquee-item"><span class="dot">✦</span> Blender</span>
+    <span class="marquee-item"><span class="dot">✦</span> Filmmaking</span>
+    <span class="marquee-item"><span class="dot">✦</span> Photography</span>
+    <span class="marquee-item"><span class="dot">✦</span> Graphic Design</span>
+    <span class="marquee-item"><span class="dot">✦</span> 3D Animation</span>
+    <span class="marquee-item"><span class="dot">✦</span> Video Editing</span>
+    <span class="marquee-item"><span class="dot">✦</span> Motion Graphics</span>
+    <span class="marquee-item"><span class="dot">✦</span> Visual Effects</span>
+    <span class="marquee-item"><span class="dot">✦</span> Blender</span>
+    <span class="marquee-item"><span class="dot">✦</span> Filmmaking</span>
+    <span class="marquee-item"><span class="dot">✦</span> Photography</span>
+    <span class="marquee-item"><span class="dot">✦</span> Graphic Design</span>
+  </div>
+</div>
+
+<!-- Services -->
+<section class="services" id="services">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">What I Do</div>
+    <div class="section-title">Services &<br><em>Expertise</em></div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <div class="service-title">3D Animation</div>
+      <p class="service-desc">Custom 3D animations built in Blender — from product visualisations to abstract motion pieces. Multiple scene variations delivered so you find the perfect fit.</p>
+      <div class="service-tags">
+        <span class="tag">Blender</span><span class="tag">Cycles</span><span class="tag">EEVEE</span><span class="tag">Motion</span>
+      </div>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.1s">
+      <div class="service-num">02</div>
+      <div class="service-title">Video Editing</div>
+      <p class="service-desc">Raw footage transformed into polished, retention-optimised stories. From concept to final cut — colour, sound design, pacing, titles, all handled with precision.</p>
+      <div class="service-tags">
+        <span class="tag">Premiere Pro</span><span class="tag">After Effects</span><span class="tag">DaVinci</span>
+      </div>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.2s">
+      <div class="service-num">03</div>
+      <div class="service-title">Graphic Design</div>
+      <p class="service-desc">Brand identities, thumbnails, social graphics, and visual systems that communicate with intent. Design that works — not just decoration.</p>
+      <div class="service-tags">
+        <span class="tag">Photoshop</span><span class="tag">Illustrator</span><span class="tag">Branding</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- About -->
+<section id="about">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">About Me</div>
+    <div class="section-title">Creating since<br><em>Age 14.</em></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-left reveal">
+      <p class="about-body">I'm <strong>Arpit Kumar Singh</strong> — a designer, video editor, and 3D animator based in Kota, Rajasthan. I started teaching myself filmmaking and animation at 14, and haven't stopped since.</p>
+      <p class="about-body" style="margin-top:20px">I run the <strong>ArpitVisuals</strong> brand — documenting my creative journey through YouTube and Instagram, covering Blender, motion graphics, tech, and the craft of visual storytelling.</p>
+      <p class="about-body" style="margin-top:20px">Currently pursuing <strong>design at IIT level</strong> while building a portfolio that bridges technical precision with creative instinct.</p>
+      <a href="#contact" class="btn-primary" style="margin-top:40px; display:inline-flex;">Get In Touch →</a>
+    </div>
+
+    <div class="skills-grid reveal" style="transition-delay:0.15s">
+      <div class="skill-card">
+        <span class="skill-icon">⬡</span>
+        <div class="skill-card-title">Blender 3D</div>
+        <div class="skill-card-sub">3D Modelling & Rendering</div>
+        <p class="skill-card-desc">Modelling, shading, lighting, and rendering photo-real or stylised 3D scenes from scratch.</p>
+        <div class="skill-tools"><span class="skill-tool">Cycles</span><span class="skill-tool">EEVEE</span><span class="skill-tool">Geo Nodes</span></div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">◈</span>
+        <div class="skill-card-title">Video Editing</div>
+        <div class="skill-card-sub">Post-Production & Storytelling</div>
+        <p class="skill-card-desc">Turning raw clips into cinematic, audience-retaining cuts. Colour, pacing, sound — all dialled in.</p>
+        <div class="skill-tools"><span class="skill-tool">Premiere Pro</span><span class="skill-tool">DaVinci</span><span class="skill-tool">Audio Mix</span></div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">◎</span>
+        <div class="skill-card-title">Motion Graphics</div>
+        <div class="skill-card-sub">Animation & Kinetic Design</div>
+        <p class="skill-card-desc">Dynamic title sequences, animated infographics, and motion-driven brand assets that move with purpose.</p>
+        <div class="skill-tools"><span class="skill-tool">After Effects</span><span class="skill-tool">Motion</span><span class="skill-tool">Expressions</span></div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">✦</span>
+        <div class="skill-card-title">Visual Effects</div>
+        <div class="skill-card-sub">Compositing & VFX Integration</div>
+        <p class="skill-card-desc">Seamlessly blending CG elements into live footage — tracking, compositing, making the impossible look real.</p>
+        <div class="skill-tools"><span class="skill-tool">After Effects</span><span class="skill-tool">Blender VFX</span><span class="skill-tool">Tracking</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Work -->
+<section id="work">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">My Work</div>
+    <div class="section-title">See It in<br><em>Action.</em></div>
+  </div>
+  <div class="work-cards">
+    <a href="https://www.youtube.com/@arpitvisuals/videos" target="_blank" class="work-card reveal">
+      <div class="work-card-left">
+        <div class="work-card-platform yt">YouTube Channel</div>
+        <div class="work-card-title">Arpit Visuals</div>
+        <p class="work-card-desc">Blender breakdowns, 3D animations, tech reviews, and behind-the-scenes of the creative process. Self-taught, self-documented.</p>
+      </div>
+      <div class="work-card-arrow">↗</div>
+    </a>
+    <a href="https://www.instagram.com/arpit.visuals_/" target="_blank" class="work-card reveal" style="transition-delay:0.1s">
+      <div class="work-card-left">
+        <div class="work-card-platform ig">Instagram</div>
+        <div class="work-card-title">arpit.visuals_</div>
+        <p class="work-card-desc">Visual experiments, design work, motion clips, and daily creative output — all in one feed.</p>
+      </div>
+      <div class="work-card-arrow">↗</div>
+    </a>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Let's Talk</div>
+      <div class="section-title">Got a project<br><em>in mind?</em></div>
+    </div>
+    <p class="contact-sub reveal" style="transition-delay:0.1s">
+      Interested in working together? Reach out on any of these platforms and I'll get back within 48 hours.
+    </p>
+    <div class="contact-links reveal" style="transition-delay:0.2s">
+      <a href="https://www.youtube.com/@arpitvisuals/videos" target="_blank" class="contact-link">
+        <div>
+          <div class="contact-link-label">YouTube</div>
+          <div class="contact-link-value">Arpit Visuals</div>
+        </div>
+        <div class="contact-link-arrow">↗</div>
+      </a>
+      <a href="https://www.instagram.com/arpit.visuals_/" target="_blank" class="contact-link">
+        <div>
+          <div class="contact-link-label">Instagram</div>
+          <div class="contact-link-value">arpit.visuals_</div>
+        </div>
+        <div class="contact-link-arrow">↗</div>
+      </a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfnbCjJba9tQ28tjvLPglZ25XZKPBfuHfbW8qYHqeGLtcOjEQ/viewform?pli=1" target="_blank" class="contact-link" style="background: rgba(155,109,255,0.10); border-top: 1px solid rgba(155,109,255,0.20);">
+        <div>
+          <div class="contact-link-label">Have a project in mind? → Fill this out</div>
+          <div class="contact-link-value" style="color: var(--accent); font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 600;">Project Inquiry Form</div>
+        </div>
+        <div class="contact-link-arrow" style="color: var(--accent);">↗</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-brand">Arpit Visuals</div>
+  <div class="footer-note">Quality &gt; Quantity — © 2026</div>
+</footer>
+
+<script>
+  // Nav scroll-aware background
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+<script>
+  // Theme toggle — works on GitHub Pages (localStorage, no server needed)
+  const toggle = document.getElementById('themeToggle');
+  const html = document.documentElement;
+  const saved = localStorage.getItem('av-theme') || 'dark';
+  html.setAttribute('data-theme', saved);
+  toggle.textContent = saved === 'dark' ? '\u2600' : '\u263e';
+  toggle.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    toggle.textContent = next === 'dark' ? '\u2600' : '\u263e';
+    localStorage.setItem('av-theme', next);
+  });
+</script>
+
+
+<!-- Particle Canvas -->
+<canvas id="particleCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.55;"></canvas>
+
+<script>
+(function() {
+  const canvas = document.getElementById('particleCanvas');
+  const ctx = canvas.getContext('2d');
+  let W = window.innerWidth, H = window.innerHeight;
+  canvas.width = W; canvas.height = H;
+
+  window.addEventListener('resize', () => {
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W; canvas.height = H;
+  }, { passive: true });
+
+  const COUNT = 88;
+  const particles = [];
+
+  function getAccentColor() {
+    const theme = document.documentElement.getAttribute('data-theme');
+    return theme === 'light' ? '124,77,255' : '155,109,255';
+  }
+
+  class Particle {
+    constructor() { this.reset(true); }
+    reset(init) {
+      this.x = Math.random() * W;
+      this.y = init ? Math.random() * H : H + 10;
+      this.size = Math.random() * 1.6 + 0.3;
+      this.speedX = (Math.random() - 0.5) * 0.35;
+      this.speedY = -(Math.random() * 0.45 + 0.12);
+      this.alpha = 0;
+      this.maxAlpha = Math.random() * 0.55 + 0.15;
+      this.fadeIn = Math.random() * 0.008 + 0.003;
+      this.fadeOut = Math.random() * 0.004 + 0.001;
+      this.life = 0;
+      this.maxLife = Math.random() * 320 + 180;
+      this.glow = Math.random() < 0.18;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      this.life++;
+      if (this.life < this.maxLife * 0.25) {
+        this.alpha = Math.min(this.alpha + this.fadeIn, this.maxAlpha);
+      } else if (this.life > this.maxLife * 0.72) {
+        this.alpha = Math.max(this.alpha - this.fadeOut, 0);
+      }
+      if (this.life >= this.maxLife || this.y < -10) this.reset(false);
+    }
+    draw() {
+      const rgb = getAccentColor();
+      ctx.save();
+      if (this.glow) {
+        ctx.shadowColor = `rgba(${rgb},0.9)`;
+        ctx.shadowBlur = 7;
+      }
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${rgb},${this.alpha.toFixed(3)})`;
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  for (let i = 0; i < COUNT; i++) particles.push(new Particle());
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+</script>
+
+</body>
+</html>
